@@ -9,12 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProgramController extends AbstractController
 {
     /**
-     * @Route("/program/", name="program_index")
+     * @Route("/program/{id}", methods={"GET"}, name="program_index", requirements={"id"="^[1-9]+[0-9]*$"})
+     * @return Response
      */
-    public function index(): Response
+    public function show(int $id): Response
     {
-        return $this->render('program/index.html.twig', [
+        return $this->render('program/show.html.twig', [
             'website' => 'My first Symfony Project',
-        ]);
+            'id' => $id,
+                    ]);
     }
 }
+
