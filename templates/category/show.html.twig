@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Series in Category {{ category.name }}  {% endblock %}
+{% block body %}
+
+    <h1>Series in Category:  {{ category.name }}  </h1>
+    <div class="media">
+        {% for program in programs %}
+        <div class="media-body">
+            <h3 class="mt-0"> {{ loop.index }} / id {{ program.id }} <a href="{{ path('program_show', {id: program.id}) }}">{{ program.title }}</a></h3>
+            <p>{{ program.summary }}</p>
+        </div>
+        {% else %}
+            Aucune série trouvée.
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('category_index') }}">
+        Back to the category list
+    </a>
+{% endblock %}

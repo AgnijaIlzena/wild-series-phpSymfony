@@ -11,8 +11,14 @@
             <p> Category: {{ program.category.name }}</p>
         </div>
     </div>
-
+<div>
     <a href="{{ path('program_index') }}">
         Back to the programs' list
     </a>
+</div>
+    <div>
+    <a href="{{ path('category_index') }}">
+        Back to the category list
+    </a>
+    </div>
 {% endblock %}
