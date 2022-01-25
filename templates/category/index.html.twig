@@ -6,6 +6,7 @@
     <h1>All Categories :</h1>
     {% for category in categories %}
         <div>
+        {# The path (link) added to each category, which brings further to list of relevant programs (under particular category #}
     <p><a href="{{ path('category_show', {categoryName: category.name}) }}">{{ category.name }}</a></p>
 {% else %}
     No categories.

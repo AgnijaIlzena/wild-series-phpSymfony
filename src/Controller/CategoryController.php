@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();
-
+ // find and show list of all categories. EACH has the link(path) redirecting to the e.g. category/horror page with containing programs inside.
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
         ]);
@@ -44,7 +44,7 @@ class CategoryController extends AbstractController
                 'No category with name: '.$categoryName.' found .'
             );
         }
-
+ // bring to page with chosen category name /category/horror and shows there 3 relevant programs (series).
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findBy(
@@ -56,6 +56,7 @@ class CategoryController extends AbstractController
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'programs' => $programs,
+
         ]);
     }
 }
