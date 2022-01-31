@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Programs in Category {{ category.name }}  {% endblock %}
+{% block body %}
+
+    {# this page coming from created link in category/index.html.twig  #}
+    <h1>Programs in Category:  {{ category.name }}  </h1>
+    <div class="media">
+        {% for program in programs %}
+        <div class="media-body">
+            {# this link brings further to Unique program's detailed page (photo, title, description, categoryName).  #}
+            <h3 class="mt-0"> {{ loop.index }} / id {{ program.id }} <a href="{{ path('program_show', {id: program.id}) }}">{{ program.title }}</a></h3>
+            <p>{{ program.summary }}</p>
+        </div>
+        {% else %}
+            Aucune program trouvée.
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('category_index') }}">
+        Back to the category list
+    </a>
+{% endblock %}

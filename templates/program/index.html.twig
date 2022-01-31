@@ -1,10 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wild Series</title>
-</head>
-<body>
-<h1>{{ website }} uraa {{ id }} </h1>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+{% block title %}All programs{% endblock %}
+{% block body %}
+
+    <h1>All table's program Programs : </h1>
+    {# Page listing all available programs with some description addedd (not any more by category): #}
+    {% for program in programs %}
+        <div>
+            {# Preparing Link to the page of each Program. There is description of each program. There is also possibility to view Seasons #}
+            <h2>{{ loop.index }} / <a href="{{ path('program_show', {id: program.id}) }}">{{ program.title }} <a> <h6> Category: {{ program.category.name }}</h6></h2>
+            <p>{{ program.summary }}</p>
+
+        </div>
+    {% else %}
+        No programs available.
+    {% endfor %}
+
+    <a href="{{ path('app_index') }}">Back to Home</a>
+
+
+{% endblock %}
+
+{# <h2>{{ loop.index }} / {{ program.title }} - Category: {{ program.category.name }}</h2> #}
