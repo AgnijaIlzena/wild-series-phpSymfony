@@ -43,16 +43,16 @@ class Season
     /**
      * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="season")
      */
-    private $episode;
+    private $episodes;
 
     /**
      * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="season", orphanRemoval=true)
      */
-    private $season;
+//    private $season;
 
     public function __construct()
     {
-        $this->season = new ArrayCollection();
+        $this->episodes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,10 +120,40 @@ class Season
         return $this;
     }
 
+
     /**
      * @return Collection|Episode[]
      */
-    public function getSeason(): Collection
+
+    public function getEpisodes(): Collection
+    {
+        return $this->episodes;
+    }
+
+    public function addEpisode(Episode $episode): self
+    {
+        if (!$this->episodes->contains($episode)) {
+            $this->episodes[] = $episode;
+            $episode->setSeason($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEpisode(Episode $episode): self
+    {
+        if ($this->episodes->removeElement($episode)) {
+            // set the owning side to null (unless already changed)
+            if ($episode->getSeason() === $this) {
+                $episode->setSeason(null);
+            }
+        }
+
+        return $this;
+    }
+}
+
+  /*  public function getSeason(): Collection
     {
         return $this->season;
     }
@@ -149,4 +179,5 @@ class Season
 
         return $this;
     }
-}
+  */
+

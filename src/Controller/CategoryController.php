@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Program;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CategoryType;
 
 /**
  * @Route("/category", name="category_")
@@ -26,6 +28,46 @@ class CategoryController extends AbstractController
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
         ]);
+    }
+
+    /**
+     * @Route ("/new", name="new")
+     */
+
+    public function new(Request $request ): Response
+    {
+        // Create a new Category Object
+        $category = new Category();
+        // Create the associated Form
+        $form = $this->createForm(CategoryType::class, $category);
+        //  Get data from HTTP request - treatment
+        $form->handleRequest($request);
+        // Was the form submitted?
+        if ($form->isSubmitted()) {
+            // Deal with the submitted data. For example : persiste & flush the entity
+            // Get the Entity Manager ( need to persist the data in data base, that or changes from data base are being persisted
+            $entityManager = $this->getDoctrine()->getManager();
+            // Persist Category Object
+            $entityManager->persist($category);
+            // Flush the persisted object
+            $entityManager->flush();
+            // Finally redirect to categories list.  Redirect to a route that display the result
+            return $this->redirectToRoute('category_index');
+
+        }
+        // Render the form
+        return $this->render('category/new.html.twig', [
+            "form" => $form->createView(),
+        ]);
+
+        //treat the form
+        //Pour récupérer les informations du formulaire soumis, Symfony a besoin d'aller piocher dans
+        // la requête HTTP. Cette requête prend, là aussi, la forme d'un objet.
+        //in the top add request
+
+
+
+
     }
 
     /**
@@ -59,4 +101,6 @@ class CategoryController extends AbstractController
 
         ]);
     }
+
+
 }

@@ -41,8 +41,6 @@ class Episode
     /* inversedBy="episodes" */
     private $season;
 
-
-
     public function __construct()
     {
         $this->season = new ArrayCollection();
